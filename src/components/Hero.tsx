@@ -61,7 +61,7 @@ const Hero = () => {
                 </div>
                 <div className="opacity-55 animate-fade-in" style={{ animationDelay: '0.6s' }}>
                     <img
-                        src="/images/photographer.png"
+                        src="/gunjeet_photography/images/photographer.png"
                         alt="Photographer Portrait"
                         className="w-full h-auto block rounded-lg shadow-2xl transition-transform duration-75 hover:scale-105"
                     />

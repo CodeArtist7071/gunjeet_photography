@@ -10,19 +10,19 @@ interface PortfolioItem {
 const portfolioItems: PortfolioItem[] = [
     {
         id: 1,
-        image: '/images/portfolio1.png',
+        image: '/gunjeet_photography/images/portfolio1.png',
         title: 'Urban Shadows',
         category: 'Architecture',
     },
     {
         id: 2,
-        image: '/images/portfolio2.png',
+        image: '/gunjeet_photography/images/portfolio2.png',
         title: 'Silent Silhouette',
         category: 'Portrait',
     },
     {
         id: 3,
-        image: '/images/portfolio3.png',
+        image: '/gunjeet_photography/images/portfolio3.png',
         title: 'Misty Mountains',
         category: 'Landscape',
     },
