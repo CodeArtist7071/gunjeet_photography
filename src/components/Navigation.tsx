@@ -33,7 +33,7 @@ const Navigation = () => {
                     <div className="flex justify-between items-center">
                         <a
                             href="#home"
-                            className="font-display text-2xl text-white tracking-widest font-medium transition-colors duration-fast hover:text-muted-gray"
+                            className="font-display text-xl md:text-2xl text-white tracking-widest font-medium transition-colors duration-fast hover:text-muted-gray"
                             onClick={(e) => {
                                 e.preventDefault()
                                 scrollToSection('home')
