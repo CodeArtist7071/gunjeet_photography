@@ -33,7 +33,7 @@ const Hero = () => {
             ref={heroRef}
         >
             <div className="flex flex-col-reverse md:grid md:grid-cols-2 gap-16 md:gap-24 items-center max-w-350 mx-auto px-8">
-                <div className="opacity-55 animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
+                <div className=" animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
                     <h1 className="text-5xl text-white md:text-7xl lg:text-8xl font-light mb-4 leading-[1.1]">
                         Capturing
                         <br />
