@@ -56,10 +56,10 @@ function App() {
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.2 }}
 ><Contact/></motion.div>}/>
-                <Route path="/contact-mobile" element={<motion.div initial={{ opacity: 0, x: 200 }}
+                <Route path="/contact-mobile" element={<motion.div initial={{ opacity: 0, x: 50 }}
                 animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, y: -40 }}
-                transition={{ duration: 0.25 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.2 }}
  ><MobileContactPage/></motion.div>}/>
             </Routes>
                </AnimatePresence>
