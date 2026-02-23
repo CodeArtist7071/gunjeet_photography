@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useIsMobile } from "../hooks/useIsMobile"
-import { ArrowLeftCircle } from "lucide-react";
+import { ArrowLeftCircle, CameraIcon, IdCardIcon, UserCircle } from "lucide-react";
 
 export const About=()=>{
     const isMobile = useIsMobile();
@@ -109,37 +109,37 @@ function MobileProfilePage() {
           <div className="absolute w-full h-full inset-0 animate-pulse bg-slate-200 dark:bg-slate-500" />
   )}
             <img
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmCvLHYMDZd-3vBJOTcZWNbT0GKqcDLqOQbeI84zG5vlmWFF6HR01DflZHh3XlpFlUYbI2S1Knx8g39NC7PZvHObxBN8pDBTB2UZ-PIfb8PMHPErGGWZf4vRv4tzpNZzj6GAScBUuOcPbtcKygSL93Bm9FWQQPZ44vG9RCKg4i7sncvIRec5BQz5NTp857qof0AhdKERa7Osx9S9-zmdJww3exZrRon1ilpR83AhIEOI4nrxL3m5F3q0C3exsgB2dbTBFRir0zNS0"
+              src="/gunjeet_photography/images/image_photo.jpeg"
               alt="Portrait"
-              className="w-full h-full object-cover opacity-90"
+              className="w-full h-full object-cover object-right opacity-90"
               onLoad={() => setIsLoading(false)}
             />
           </div>
 
           <div className="absolute -bottom-4 -right-4 bg-primary text-white p-4 rounded-xl shadow-xl">
             <p className="text-xs font-bold uppercase">Est.</p>
-            <p className="text-xl font-bold">2014</p>
+            <p className="text-xl font-bold">2012</p>
           </div>
         </div>
 
         {/* Identity */}
         <div className="mb-10 text-center sm:text-left">
-          <h2 className="text-3xl font-bold mb-1">Elias Thorne</h2>
+          <h2 className="text-3xl font-bold mb-2">Gunjeet Bhansingh</h2>
           <p className="text-primary font-medium uppercase text-xs mb-4">
-            Visual Storyteller & Cinematographer
+            Event Photographer & Cinematographer
           </p>
 
           <div className="flex items-center justify-center sm:justify-start gap-4 text-slate-500 dark:text-slate-400">
             <div className="flex items-center gap-1">
-              <span className="material-symbols-outlined text-sm">
-                location_on
+              <span className="material-symbols-outlined text-xs">
+                location:
               </span>
-              <span className="text-xs font-medium">Berlin, DE</span>
+              <span className="text-xs font-medium">Bhubaneshwar,ODISHA</span>
             </div>
 
             <div className="flex items-center gap-1">
-              <span className="material-symbols-outlined text-sm">
-                verified
+              <span className="material-symbols-outlined text-xs">
+                verified:
               </span>
               <span className="text-xs font-medium">10+ Years Exp.</span>
             </div>
@@ -170,17 +170,17 @@ function MobileProfilePage() {
           <div className="grid gap-3">
             {[
               {
-                icon: "face",
+                icon: <UserCircle size={24} color="white"/>,
                 title: "Fine Art Portraiture",
                 desc: "Character-driven studio sessions."
               },
               {
-                icon: "business_center",
+                icon: <IdCardIcon size={24} color="white" />,
                 title: "Commercial Branding",
                 desc: "Visual assets for minimalist brands."
               },
               {
-                icon: "video_camera_front",
+                icon: <CameraIcon size={24} color="white"/>,
                 title: "Editorial Direction",
                 desc: "Creative concepting and execution."
               }

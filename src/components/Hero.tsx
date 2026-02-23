@@ -42,7 +42,7 @@ const Hero = () => {
                         Emotions
                     </h1>
                     <p className="text-xl md:text-2xl text-white font-light mb-8 font-body">
-                        Visual Storyteller & Fine Art Photographer
+                       Event Photographer & Cinematographer
                     </p>
                     <p className="text-base md:text-lg text-white leading-relaxed max-w-125">
                         Exploring the interplay of light and shadow, creating cinematic narratives
@@ -61,7 +61,7 @@ const Hero = () => {
                 </div>
                 <div className="opacity-55 animate-fade-in" style={{ animationDelay: '0.6s' }}>
                     <img
-                        src="/gunjeet_photography/images/photographer.png"
+                        src="/gunjeet_photography/images/image-portrait.png"
                         alt="Photographer Portrait"
                         className="w-full h-auto block rounded-lg shadow-2xl transition-transform duration-75 hover:scale-105"
                     />
