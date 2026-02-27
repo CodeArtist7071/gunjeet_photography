@@ -10,17 +10,57 @@ export const fetchFolders = async () => {
 };
 
 export const fetchAllImages = async () => {
-    const folders = await fetchFolders();
-    console.log("fetching folder id", folders);
-    const imagePromises = folders.map( (folder:any) => fetch(`https://www.googleapis.com/drive/v3/files?q='${folder.id}'+in+parents+and+mimeType+contains+'image/'+and+trashed=false&key=${API_KEY}`).then( (res) => res.json()));
-    const results = await Promise.all(imagePromises);
-    const allImages = results.flatMap( (result) => result.files || []);
-    return allImages;
-}
+  const response = await fetch(
+    `${GOOGLE_API}v3/files?q=mimeType contains 'image/' and trashed=false&fields=files(id,name,mimeType,parents)&key=${API_KEY}`
+  );
+
+  const data = await response.json();
+
+  return data.files || [];
+};
 ;
-export const fetchImagesById = async (id:string) => {
+export const fetchImagesByFolderId = async (id:string) => {
     const response = await fetch(`${GOOGLE_API}v3/files?q='${id}'+in+parents+and+mimeType+contains+'image/'+and+trashed=false&fields=files(id,name,mimeType)&key=${API_KEY}`);
     const data = await response.json();
     return data;
 }
-;
+  ;
+
+export const fetchFirstImages = async (folderId:string) => {
+  const response = await fetch(
+    `${GOOGLE_API}v3/files
+    ?q='${folderId}'+in+parents+and+mimeType+contains+'image/'+and+trashed=false
+    &orderBy=createdTime desc
+    &pageSize=1
+    &fields=files(id,name)
+    &key=${API_KEY}`
+  );
+  const data = await response.json();
+  return data;
+}
+
+// export const fetchImagesById = async (ids: string | string[]) => {
+//   const idArray = Array.isArray(ids) ? ids : [ids]
+
+//   if (!idArray.length) return { files: [] }
+
+//   const parentQuery = idArray
+//     .map((id) => `'${id}' in parents`)
+//     .join(" or ")
+
+//   const query = `(${parentQuery}) and mimeType contains 'image' and trashed=false`
+
+//   const url = `${GOOGLE_API}v3/files?q=${encodeURIComponent(
+//     query
+//   )}&fields=files(id,name,mimeType)&key=${API_KEY}`
+
+//   const response = await fetch(url)
+
+//   if (!response.ok) {
+//     const error = await response.json()
+//     console.error("Drive API Error:", error)
+//     throw new Error(error.error?.message)
+//   }
+
+//   return response.json()
+// }

@@ -1,65 +1,38 @@
-import { ArrowLeftCircle, X, XCircleIcon } from "lucide-react";
+import { ArrowLeftCircle, SettingsIcon, SlidersHorizontal, XCircleIcon } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { fetchFolders, fetchImagesById } from "../../hooks/events";
-import { API_KEY, GOOGLE_API } from "../../constants/apis";
 import { ImageSkeleton } from "./ImageSkeleton";
-import ScrollToTop from "../../utils/ScrollToTop";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 
 const PortfolioGallery = ({ navigate }: { navigate: any }) => {
-  const [folders, setFolders] = useState<any>([]);
   const [imageFiles, setImageFiles] = useState<any>([]);
-  const [imageLoading, setImageLoading] = useState<boolean>(false);
-  const [categoryLoading, setCategoryLoading] = useState<boolean>(false);
+  const datas = useSelector((state: RootState) => state.drive.files.data ?? []);
+  const loading = useSelector((state: RootState) => state.drive.files.status);
+  // console.log("datas", datas[0]?.parentFolderName);
+  const [layout, setLayout] = useState<"masonry" | "block" | "twoRows">("masonry");
   const [selectedCategory, setSelectedCategory] = useState<any>(
-    folders?.[0]?.name,
+   null,
   );
 
   useEffect(() => {
-    const loadFolders = async () => {
-      setCategoryLoading(true);
-      setImageLoading(true);
-      const data = await fetchFolders();
-      setFolders(data);
-      setCategoryLoading(false);
-      const response = await fetchImagesById(data[0].id);
-      const imgData = await response;
-      setImageFiles(imgData?.files);
-      setImageLoading(false);
-      if (data?.length > 0) {
-        setSelectedCategory(data[0].name);
-      }
-      console.log(data);
-    };
-    loadFolders();
-    setImageLoading(false);
-    setCategoryLoading(false);
-  }, []);
-
-  async function handlePress(category: any) {
-    setImageLoading(true);
-    console.log("category", category);
-    setSelectedCategory(category.name);
-    try {
-      const response = await fetchImagesById(category.id);
-      const data = await response;
-      // console.log(data);
-      if (data.files) {
-        setImageFiles(data.files);
-        setImageLoading(false);
-      }
-    } catch (error) {
-      console.error("Error fetching images:", error);
-    } finally {
-      setImageLoading(false);
+    if (datas.length > 0 && !selectedCategory) {
+      setSelectedCategory(datas[0].parentFolderName);
+      setImageFiles(datas[0].images);
     }
-  }
+  }, [datas, selectedCategory]);
   
+  async function handlePress(category: any) {
+    // console.log("category", category);
+    setSelectedCategory(category.parentFolderName);
+    setImageFiles(category.images);
+  }
+
   function scrollToTop() {
     window.scrollTo({
-          top: 0,
-          behavior: "smooth",
-        })
+      top: 0,
+      behavior: "smooth",
+    });
   }
   return (
     <div
@@ -93,7 +66,7 @@ const PortfolioGallery = ({ navigate }: { navigate: any }) => {
           architectural shadows.
         </p>
       </div>
-      {categoryLoading ? (
+      {loading == "pending" ? (
         <div role="status" className="animate-pulse flex px-6 gap-3 relative">
           <div className="w-30 h-7 bg-white/90 rounded-full mb-4 "></div>
           <div className="w-30 h-7 bg-white/90 rounded-full mb-4 "></div>
@@ -102,12 +75,12 @@ const PortfolioGallery = ({ navigate }: { navigate: any }) => {
       ) : (
         <div className="pb-6 overflow-x-auto no-scrollbar">
           <div className="flex px-4 gap-3 relative">
-            {folders.map((category: any) => {
-              const isActive = selectedCategory === category.name;
+            {datas.map((category: any, index: number) => {
+              const isActive = selectedCategory === category.parentFolderName;
 
               return (
                 <button
-                  key={category.id}
+                  key={index}
                   onClick={() => handlePress(category)}
                   className="relative px-5 py-2 rounded-full text-xs font-bold tracking-wider uppercase whitespace-nowrap"
                 >
@@ -130,7 +103,7 @@ const PortfolioGallery = ({ navigate }: { navigate: any }) => {
                         : "text-slate-600 dark:text-slate-400"
                     }`}
                   >
-                    {category.name}
+                    {category.parentFolderName}
                   </span>
                 </button>
               );
@@ -139,78 +112,94 @@ const PortfolioGallery = ({ navigate }: { navigate: any }) => {
         </div>
       )}
 
-      {imageLoading ? <ImageSkeleton /> : <Gallery files={imageFiles} />}
+      {loading == "pending" ? (
+        <ImageSkeleton />
+      ) : (
+          <Gallery files={imageFiles} layout={layout} />
+      )}
       {/* Footer */}
       <div className="mt-12 text-center mb-24">
         <p className="text-[10px] font-bold tracking-[0.2em] uppercase opacity-40 mb-4">
           End of Gallery
         </p>
-        <button onClick={()=>scrollToTop()} className="cursor-pointer text-primary text-xs font-bold uppercase tracking-widest border-b-2 border-primary/20 pb-1 hover:border-primary transition-all">
+        <button
+          onClick={() => scrollToTop()}
+          className="cursor-pointer text-primary text-xs font-bold uppercase tracking-widest border-b-2 border-primary/20 pb-1 hover:border-primary transition-all"
+        >
           Back to Top
         </button>
       </div>
 
       {/* Floating Action Button */}
-      <button className="fixed bottom-20 right-4 w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center shadow-xl shadow-primary/20 z-40 active:scale-95 transition-transform">
-        <span className="material-symbols-outlined">tune</span>
+      <button  onClick={() => {
+         setLayout((prev) =>
+           prev === "masonry" ? "block" : prev === "block" ? "twoRows" : "masonry"
+         );
+       }} className="fixed bottom-20 bg-white right-4 w-12 h-12 rounded-full bg-primary text-black flex items-center justify-center shadow-xl shadow-primary/20 z-40 active:scale-95 transition-transform">
+        <span className="material-symbols-outlined">
+          <SlidersHorizontal size={25}/>
+        </span>
       </button>
     </div>
   );
 };
 
 export default PortfolioGallery;
-{
-  /* Bottom Nav */
-}
-{
-  /*<nav className="fixed bottom-0 w-full bg-background-light dark:bg-background-dark/90 backdrop-blur-xl border-t border-slate-200 dark:border-slate-800">
-  <div className="flex items-center justify-around h-16 px-6">
-    {["home", "grid_view", "person", "chat_bubble"].map((icon, idx) => (
-      <a
-        key={idx}
-        href="#"
-        className={`flex flex-col items-center gap-1 ${idx === 1 ? "text-primary" : "text-slate-400 hover:text-primary transition-colors"}`}
-      >
-        <span className="material-symbols-outlined">{icon}</span>
-      </a>
-    ))}
-  </div>
-</nav>*/
-}
 
-const Gallery = ({ files }: any) => {
+
+const Gallery = ({ files, layout }: any) => {
   const [selectedImage, setSelectedImage] = useState<any>(null);
-  return (
-    <div className="columns-2 gap-4 px-6 md:hidden">
-      <AnimatePresence mode="popLayout">
-        {files.map((item: any) => (
-          <motion.div
-            key={item.id}
-            layout
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.9 }}
-            transition={{ duration: 0.35 }}
-            onClick={() => setSelectedImage(item.id)}
-            className="group relative overflow-hidden rounded-lg mb-4 break-inside-avoid"
-          >
-            <motion.img
-              layoutId={`image-${item.id}`}
-              src={`https://drive.google.com/thumbnail?id=${item.id}&sz=w1000`}
-              className="w-full rounded-lg"
-              initial={{ opacity: 1, transitionDuration: 0.5 }}
-              animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
-              style={{ aspectRatio: item.aspect }}
-            />
+  
+  let containerClass = "";
 
-            <div className="absolute bottom-0 left-0 right-0 p-3 bg-linear-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
-              <p className="text-[10px] text-white/70 uppercase tracking-widest">
-                {item.title}
-              </p>
-            </div>
-          </motion.div>
-        ))}
+  switch (layout) {
+    case "masonry":
+      containerClass = "columns-2 gap-5"; // Tailwind masonry-like
+      break;
+    case "block":
+      containerClass = "grid grid-cols-1 gap-4";
+      break;
+    case "twoRows":
+      containerClass = "grid grid-cols-2 gap-4";
+      break;
+  }
+  return (
+    <div className={`columns-2 gap-4 px-6 md:hidden ${containerClass}`
+}>
+      <AnimatePresence mode="popLayout">
+        {files.map((item: any,idx:number) => {
+          const aspectRatios = ["3/4", "4/3", "1/1", "16/9"];
+          const ratio = aspectRatios[idx % aspectRatios.length];
+          return (
+            <motion.div
+              key={item.id}
+              layout
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.35 }}
+              
+              onClick={() => setSelectedImage(item.id)}
+              className="group relative overflow-hidden rounded-lg mb-4 break-inside-avoid"
+            >
+              <motion.img
+                layoutId={`image-${item.id}`}
+                src={`https://drive.google.com/thumbnail?id=${item.id}&sz=w1000`}
+                className={`w-full h-full object-cover rounded-lg aspect-${ratio}`}
+                initial={{ opacity: 1, transitionDuration: 0.5 }}
+                animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+                
+              />
+
+              <div className="absolute bottom-0 left-0 right-0 p-3 bg-linear-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                <p className="text-[10px] text-white/70 uppercase tracking-widest">
+                  {item.title}
+                </p>
+              </div>
+            </motion.div>
+          )
+        })}
       </AnimatePresence>
       <AnimatePresence>
         {selectedImage && (

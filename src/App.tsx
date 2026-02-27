@@ -12,10 +12,25 @@ import { Contact as MobileContactPage } from "../src/pages/Contact";
 import { useIsMobile } from "./hooks/useIsMobile";
 import { AnimatePresence, motion } from "framer-motion";
 import ScrollToTop from "./utils/ScrollToTop";
+import { useEffect } from "react";
+import { AppDispatch, RootState } from "./store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { loadData } from "./store/slice/driveSlice";
+
+
+
+
+
+
 
 function App() {
   const isMobile = useIsMobile();
   const location = useLocation();
+  const dispatch: AppDispatch = useDispatch();
+ 
+  useEffect(() => {
+     dispatch(loadData());
+   }, [dispatch]);
   return (
     <div className=" min-h-screen text-white bg-black md:bg-transparent">
       <ScrollToTop/>

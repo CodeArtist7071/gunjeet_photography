@@ -1,8 +1,9 @@
 import { useEffect, useRef } from 'react'
 import { email_id, instagram_id, phone_no } from '../constants/variables'
 import { useIsMobile } from '../hooks/useIsMobile'
-import { ArrowLeftCircle, MailIcon, ShareIcon } from 'lucide-react'
-import { useNavigate } from 'react-router-dom'
+import { ArrowLeftCircle, Instagram, MailIcon, PhoneCall, PhoneCallIcon, ShareIcon } from 'lucide-react'
+import { Link, useNavigate } from 'react-router-dom'
+import FloatingActionButton from '../components/FloatingActionButton'
 
 export const Contact = () => {
     const contactRef = useRef<HTMLDivElement>(null)
@@ -104,11 +105,9 @@ const ContactPage = ({navigate}:any) => {
   }
   return (
     <div id="contact-mobile" className=" md:hidden bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen flex flex-col font-display">
-      {/* Header */}
-       {/* Header */}
   <header className="flex items-center justify-between p-6 w-full fixed top-0 left-0 z-50 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-md">
     <a
-      className="text-slate-900 dark:text-slate-100 transition-opacity hover:opacity-70"
+      className="text-slate-900 cursor-pointer dark:text-slate-100 transition-opacity hover:opacity-70"
       onClick={()=>navigate(-1)}
     >
       <ArrowLeftCircle size={35} color="white"  />
@@ -120,9 +119,16 @@ const ContactPage = ({navigate}:any) => {
       <main className="flex-1 flex flex-col max-w-2xl mx-auto w-full px-6 py-24">
         {/* Title */}
         <div className="mb-12">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl mb-8 text-white">
-            Get in Touch
-          </h2>
+          <div className='flex justify-between items-center mb-8'>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl text-white">
+              Get in Touch
+            </h2>
+            <Link to={`tel:${phone_no}`} className='border hover:border-white hover:animate-ping transition-all rounded-full p-3'>
+               <PhoneCallIcon/>
+            </Link>
+           
+          </div>
+         
           <p className="text-slate-500 dark:text-slate-400 text-lg leading-relaxed max-w-md">
             Available for bookings and collaborations worldwide. Let's create something timeless.
           </p>
@@ -140,6 +146,7 @@ const ContactPage = ({navigate}:any) => {
                 className="w-full px-4 bg-transparent border-0 border-b border-slate-200 dark:border-slate-800 focus:ring-0 focus:border-primary px-0 py-3 text-lg placeholder:text-slate-300 dark:placeholder:text-slate-700 transition-all"
                 placeholder="e.g. Julian Montgomery"
                 type="text"
+                name="fullName"
               />
             </div>
 
@@ -152,6 +159,7 @@ const ContactPage = ({navigate}:any) => {
                 className="w-full px-4 bg-transparent border-0 border-b border-slate-200 dark:border-slate-800 focus:ring-0 focus:border-primary py-3 text-lg placeholder:text-slate-300 dark:placeholder:text-slate-700 transition-all"
                 placeholder="name@example.com"
                 type="email"
+                name="email"
               />
             </div>
 
@@ -164,6 +172,7 @@ const ContactPage = ({navigate}:any) => {
                 className="w-full px-4 bg-transparent border-0 border-b border-slate-200 dark:border-slate-800 focus:ring-0 focus:border-primary py-3 text-lg placeholder:text-slate-300 dark:placeholder:text-slate-700 resize-none transition-all"
                 placeholder="Tell me about your project..."
                 rows={4}
+                name="message"
               ></textarea>
             </div>
           </div>
@@ -181,17 +190,16 @@ const ContactPage = ({navigate}:any) => {
         <div className="mt-auto pt-16 pb-8">
           <div className="flex flex-col items-center gap-8">
             <div className="flex gap-10">
+              <Link
+                className="text-slate-400 hover:text-primary dark:text-slate-500 dark:hover:text-slate-100 transition-colors"
+                to={instagram_id}>
+                  <Instagram size={20}/>
+              </Link>
               <a
                 className="text-slate-400 hover:text-primary dark:text-slate-500 dark:hover:text-slate-100 transition-colors"
                 href="#"
               >
-                <span className="material-symbols-outlined text-2xl">photo_camera</span>
-              </a>
-              <a
-                className="text-slate-400 hover:text-primary dark:text-slate-500 dark:hover:text-slate-100 transition-colors"
-                href="#"
-              >
-                <ShareIcon/>
+                <PhoneCall size={20}/>
               </a>
               <a
                 className="text-slate-400 hover:text-primary dark:text-slate-500 dark:hover:text-slate-100 transition-colors"
@@ -206,9 +214,12 @@ const ContactPage = ({navigate}:any) => {
           </div>
         </div>
       </main>
-
+      {/*<div className='pb-20'>
+         <FloatingActionButton/>
+      </div>*/}
+    
       {/* Bottom Navigation */}
-      <nav className="sticky bottom-0 w-full border-t border-slate-200 dark:border-slate-800 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md">
+      {/*<nav className="sticky bottom-0 w-full border-t border-slate-200 dark:border-slate-800 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md">
         <div className="flex max-w-2xl mx-auto px-4 py-3 justify-around items-center">
           <a className="flex flex-col items-center text-slate-400 dark:text-slate-500 hover:text-primary transition-colors" href="#">
             <span className="material-symbols-outlined">home</span>
@@ -223,7 +234,7 @@ const ContactPage = ({navigate}:any) => {
             <span className="material-symbols-outlined">person</span>
           </a>
         </div>
-      </nav>
+      </nav>*/}
     </div>
   );
 };

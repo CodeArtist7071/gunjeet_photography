@@ -1,7 +1,10 @@
+import { Suspense, useEffect, useState } from "react";
+import { fetchFolders, fetchImagesByFolderId } from "../hooks/events";
 import About  from "./About";
 import Contact from "./Contact";
 import Hero from "./Hero";
 import { Portfolio } from "./Portfolio";
+
 
 // const Home = () => {
 //   return (
@@ -31,15 +34,18 @@ import { Portfolio } from "./Portfolio";
 
 // export default Home
 import { motion, useScroll, useTransform } from "framer-motion";
+import { useDispatch, useSelector } from "react-redux";
+import { loadData } from "../store/slice/driveSlice";
+import { AppDispatch, RootState } from "../store/store";
+
 
 const Home = () => {
-  const { scrollY } = useScroll();
-
+   const { scrollY } = useScroll();
   // Background moves slower than scroll
   const y = useTransform(scrollY, [0, 1000], [0, 300]);
 
   return (
-    <div className="relative min-h-screen text-white bg-black/50 overflow-hidden">
+    <div className="relative min-h-screen text-white bg-black overflow-hidden">
       <Hero />
       {/* Parallax Background */}
       <motion.div style={{ y }} className="absolute inset-0 -z-10">
@@ -50,17 +56,14 @@ const Home = () => {
         <img
           src="/gunjeet_photography/images/image_photo_1.jpeg"
           alt="background"
-          className="w-full h-full object-cover object-[60%_center] md:object-cover grayscale  brightness-75"
+          className="w-full h-full object-cover object-[60%_center] md:object-cover grayscale brightness-75"
         />
 
         {/*<div className="absolute inset-0
           bg-[radial-gradient(circle_at_left,rgba(0,0,0,0)_20%,rgba(0,0,0,0.8)_80%,rgba(0,0,0,1)_100%)]">
         </div>*/}
       </motion.div>
-
-      {/* Content */}
-
-      <Portfolio />
+      <Portfolio/>         
       <About />
       <Contact />
     </div>

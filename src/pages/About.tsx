@@ -6,6 +6,7 @@ import {
   IdCardIcon,
   UserCircle,
 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export const About = () => {
   const isMobile = useIsMobile();
@@ -196,7 +197,7 @@ function MobileProfilePage() {
             ].map((item, i) => (
               <div
                 key={i}
-                className="flex items-center gap-4 p-4 rounded-lg bg-slate-50 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-800"
+                className="flex items-center gap-4 p-4 rounded-lg  bg-slate-900/50 border border-slate-800"
               >
                 <span className="material-symbols-outlined text-primary">
                   {item.icon}
@@ -212,38 +213,15 @@ function MobileProfilePage() {
 
         {/* CTA */}
         <div className="flex flex-col gap-3">
-          <button className="w-full bg-primary text-white py-4 rounded-xl font-bold text-sm uppercase shadow-lg hover:opacity-90 active:scale-[0.98] transition-all">
-            Start a Project
-          </button>
+          <Link to={"/contact-mobile"} className="w-full text-center bg-primary text-white py-4 rounded-xl font-bold text-sm uppercase shadow-lg hover:opacity-90 active:scale-[0.98] transition-all">
+            Contact for Project
+          </Link>
 
-          <button className="w-full border border-slate-200 dark:border-slate-700 py-4 rounded-xl font-bold text-sm uppercase hover:bg-slate-50 dark:hover:bg-slate-800 transition-all">
-            Download Portfolio
-          </button>
+          <Link to={"/portfolio-m"} className="w-full text-center border border-slate-700 py-4 rounded-xl font-bold text-sm uppercase hover:bg-slate-800 transition-all">
+            View Portfolio
+          </Link>
         </div>
       </main>
-
-      {/* Bottom Nav */}
-      <nav className="fixed bottom-0 w-full max-w-md border-t border-slate-200 dark:border-slate-800 dark:bg-background-dark/90 backdrop-blur-xl px-4 pb-6 pt-3 flex justify-between items-center z-20">
-        {[
-          { icon: "grid_view", label: "Gallery" },
-          { icon: "person", label: "About", active: true },
-          { icon: "auto_stories", label: "Journal" },
-          { icon: "mail", label: "Contact" },
-        ].map((item, i) => (
-          <a
-            key={i}
-            href="#"
-            className={`flex flex-col items-center gap-1 ${
-              item.active ? "text-primary" : "text-slate-400 hover:text-primary"
-            }`}
-          >
-            <span className="material-symbols-outlined">{item.icon}</span>
-            <span className="text-[10px] font-bold uppercase tracking-wider">
-              {item.label}
-            </span>
-          </a>
-        ))}
-      </nav>
     </div>
   );
 }

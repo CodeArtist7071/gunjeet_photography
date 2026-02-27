@@ -29,10 +29,10 @@ const Hero = () => {
     return (
         <section
             id="home"
-            className="min-h-screen pt-25 md:mt-2.5 flex  items-center justify-center relative pb-10 md:pb-20 overflow-hidden bg-black "
+            className="min-h-screen pt-25 md:mt-2.5 flex  items-center justify-center relative  overflow-hidden"
             ref={heroRef}
         >
-            <div className="flex flex-col-reverse md:grid md:grid-cols-2 gap-16 md:gap-24 items-center max-w-350 mx-auto px-8">
+            <div className="flex flex-col-reverse md:grid md:grid-cols-2 gap-16 md:gap-24 items-center max-w-350 mx-auto px-8 text-white">
                 <div className="col-start-2 animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
                     <h1 className="text-5xl text-white md:text-7xl lg:text-8xl font-light mb-4 leading-[1.1]">
                         Capturing
@@ -41,7 +41,7 @@ const Hero = () => {
                         <br />
                         Emotions
                     </h1>
-                    <p className="text-xl md:text-2xl text-white font-light mb-8 font-body">
+                    <p className="text-xl text-white md:text-2xl font-light mb-8 font-body">
                        Event Photographer & Cinematographer
                     </p>
                     <p className="text-base md:text-lg text-white leading-relaxed max-w-125">
@@ -50,7 +50,7 @@ const Hero = () => {
                     </p>
                     <a
                         href="#portfolio"
-                        className="inline-block mt-8 px-10 py-4 bg-transparent text-white border border-white font-body text-sm font-normal tracking-widest uppercase cursor-pointer relative overflow-hidden transition-all duration-normal hover:text-black before:content-[''] before:absolute before:top-0 before:-left-full before:w-full before:h-full before:bg-white before:transition-all before:duration-normal before:z-[-1] hover:before:left-0"
+                        className="inline-block mt-8 px-10 py-4 text-white bg-transparent border hover:bg-white border-white font-body text-sm font-normal tracking-widest uppercase cursor-pointer relative overflow-hidden transition-all duration-normal hover:text-black before:content-[''] before:absolute before:top-0 before:-left-full before:w-full before:h-full before:bg-white before:transition-all before:duration-normal before:z-[-1] hover:before:left-0"
                         onClick={(e) => {
                             e.preventDefault()
                             document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth' })
@@ -59,11 +59,11 @@ const Hero = () => {
                         View Portfolio
                     </a>
                 </div>
-                <div className="row-start-1 opacity-55 animate-fade-in" style={{ animationDelay: '0.6s' }}>
+                <div className="row-start-1 dark:opacity-55 animate-fade-in" style={{ animationDelay: '0.6s' }}>
                     <img
                         src="/gunjeet_photography/images/image-portrait.png"
                         alt="Photographer Portrait"
-                        className="w-full h-auto block rounded-lg shadow-2xl transition-transform duration-75 hover:scale-105"
+                        className="w-full md:w-[95%] h-auto mx-auto block rounded-lg shadow-2xl transition-transform duration-75 hover:scale-105"
                     />
                 </div>
             </div>
